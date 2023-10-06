@@ -1,15 +1,18 @@
 require("dotenv").config();
 
-const { Client, Events, GatewayIntentBits, REST } = require("discord.js");
+const { Client, Collection, Events, GatewayIntentBits } = require("discord.js");
 
-const {
-  ClientReadyHandler,
-  clientReadyHandler,
-} = require("./events/clientReady");
+const { clientReadyHandler } = require("./events/clientReady");
 
 const client = new Client({
   intents: [GatewayIntentBits.Guilds],
 });
+
+const pingCommand = require("./commands/ping");
+
+client.commands = new Collection();
+
+client.commands.set(pingCommand.data.name.pingCommand);
 
 client.on(Events.ClientReady, clientReadyHandler);
 

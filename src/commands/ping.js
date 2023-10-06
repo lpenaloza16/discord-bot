@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require("discord.js");
 
 const data = new SlashCommandBuilder()
 
-  .setName("Ping")
+  .setName("ping")
   .setDescription("Replies with Pong!");
 
 async function execute(interaction) {
