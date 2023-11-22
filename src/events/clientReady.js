@@ -5,7 +5,7 @@ const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
 async function clientReadyHandler(client) {
   console.log(`Logged in as ${client.user.tag}`);
   try {
-    console.log(`Started refreshing ${client.commands.length} commands!`);
+    console.log(`Started refreshing ${client.commands.size} commands!`);
 
     const data = await rest.put(
       Routes.applicationGuildCommands(
@@ -13,11 +13,11 @@ async function clientReadyHandler(client) {
         process.env.GUILD_ID
       ),
       {
-        body: client.commands.map((command) => {
-          return command.data.toJSON();
-        }),
+        body: client.commands.map((command) => command.data.toJSON()),
       }
     );
+
+    console.log(`Successfully reloaded ${data.length} commands.`);
   } catch (error) {
     console.error(error);
   }
@@ -25,5 +25,3 @@ async function clientReadyHandler(client) {
 module.exports = {
   clientReadyHandler,
 };
-
-// console.log(`successfully reloaded ${data.length}commands`);
